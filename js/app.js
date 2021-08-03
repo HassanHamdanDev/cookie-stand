@@ -14,27 +14,22 @@ let tr1Element = document.createElement('tr');
 tableElement.appendChild(tr1Element);
 
 
-function Location(locationName, min, max, avg, customer, cookiesResult, cookiesTotal) {
+function Location(locationName, min, max, avg, customers, cookiesResult, cookiesTotal) {
     this.locationName = locationName;
     this.min = min;
     this.max = max;
     this.avg = avg;
-    this.customer = customer;
+    this.customers = customers;
     this.cookiesResult = cookiesResult;
     this.cookiesTotal = cookiesTotal;
     locationArray.push(this);
 };
 
-Location.prototype.getCustomers = function () {
-    for (let i = 0; i < hours.length; i++) {
-        let custmerr = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
-        this.customer.push(custmerr);
-    }
-};
-
 Location.prototype.getCookiesResult = function () {
     for (let i = 0; i < hours.length; i++) {
-        this.cookiesResult.push(Math.floor(this.customer[i] * this.avg));
+        let oneCustmer = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
+        this.customers.push(oneCustmer);
+        this.cookiesResult.push(Math.floor(this.customers[i] * this.avg));
         this.cookiesTotal += this.cookiesResult[i];
     }
 };
@@ -62,33 +57,15 @@ Location.prototype.render = function () {
 
 function salesHours() {
 
-    let thHours1 = document.createElement('th');
-    thHours1.textContent = "Hours";
-    tr1Element.appendChild(thHours1);
-
+    hours.unshift(" ");
+    hours.push("Daily Location Total")
     for (let i = 0; i < hours.length; i++) {
         let thHours = document.createElement('th');
         thHours.textContent = hours[i];
         tr1Element.appendChild(thHours);
     }
-    let thHours = document.createElement('th');
-    thHours.textContent = "Daily Location Total";
-    tr1Element.appendChild(thHours);
-};
-
-
-let seattle = new Location("Seattle", 23, 65, 6.3, [], [], 0);
-let tokyo = new Location("Tokyo", 3, 24, 1.2, [], [], 0);
-let dubai = new Location("Dubai", 11, 38, 3.7, [], [], 0);
-let paris = new Location("Paris", 20, 38, 2.3, [], [], 0);
-let lima = new Location("Lima", 2, 16, 4.6, [], [], 0);
-
-salesHours();
-
-for (let i = 0; i < locationArray.length; i++) {
-    locationArray[i].getCustomers();
-    locationArray[i].getCookiesResult();
-    locationArray[i].render();
+    hours.shift();
+    hours.pop();
 };
 
 let allTotalsPerHours = 0;
@@ -122,5 +99,17 @@ function totalHours() {
     tr3Element.appendChild(tdallTotal);
 };
 
+let seattle = new Location("Seattle", 23, 65, 6.3, [], [], 0);
+let tokyo = new Location("Tokyo", 3, 24, 1.2, [], [], 0);
+let dubai = new Location("Dubai", 11, 38, 3.7, [], [], 0);
+let paris = new Location("Paris", 20, 38, 2.3, [], [], 0);
+let lima = new Location("Lima", 2, 16, 4.6, [], [], 0);
+
+salesHours();
+
+for (let i = 0; i < locationArray.length; i++) {
+    locationArray[i].getCookiesResult();
+    locationArray[i].render();
+};
 
 totalHours();
