@@ -7,6 +7,9 @@ let hours = ["6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM",
 
 let locationArray = [];
 
+let allTotalsPerHours = 0;
+let totalsPerHours;
+
 let tableElement = document.createElement('table');
 sales.appendChild(tableElement);
 
@@ -27,9 +30,9 @@ function Location(locationName, min, max, avg, customers, cookiesResult, cookies
 
 Location.prototype.getCookiesResult = function () {
     for (let i = 0; i < hours.length; i++) {
-        let oneCustmer = Math.floor(Math.random() * (this.max - this.min + 1) + this.min);
+        let oneCustmer = Math.round(Math.random() * (this.max - this.min + 1) + this.min);
         this.customers.push(oneCustmer);
-        this.cookiesResult.push(Math.floor(this.customers[i] * this.avg));
+        this.cookiesResult.push(Math.round(this.customers[i] * this.avg));
         this.cookiesTotal += this.cookiesResult[i];
     }
 };
@@ -68,9 +71,6 @@ function salesHours() {
     hours.pop();
 };
 
-let allTotalsPerHours = 0;
-let totalsPerHours;
-
 function totalHours() {
 
     let tr3Element = document.createElement('tr');
@@ -99,6 +99,7 @@ function totalHours() {
     tr3Element.appendChild(tdallTotal);
 };
 
+
 let seattle = new Location("Seattle", 23, 65, 6.3, [], [], 0);
 let tokyo = new Location("Tokyo", 3, 24, 1.2, [], [], 0);
 let dubai = new Location("Dubai", 11, 38, 3.7, [], [], 0);
@@ -113,3 +114,25 @@ for (let i = 0; i < locationArray.length; i++) {
 };
 
 totalHours();
+
+let loctionForm = document.getElementById('newLocation');
+loctionForm.addEventListener("submit", submitHandler);
+
+function submitHandler(event) {
+    event.preventDefault();
+
+    let newLocationName = event.target.locationName.value;
+    let newminNumber = event.target.minNumber.value;
+    let newmaxNumber = event.target.maxNumber.value;
+    let newavgNumber = event.target.avgNumber.value;
+
+    let newLocation = new Location(newLocationName, newminNumber, newmaxNumber, newavgNumber, [], [], 0);
+
+    newLocation.getCookiesResult();
+    newLocation.render();
+
+    tableElement.deleteRow(locationArray.length);
+    totalHours();
+    
+    loctionForm.reset();
+};
