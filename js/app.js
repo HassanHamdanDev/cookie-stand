@@ -7,7 +7,7 @@ let hours = ["6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM",
 
 let locationArray = [];
 
-let allTotalsPerHours = 0;
+let allTotalsPerHours;
 let totalsPerHours;
 
 let tableElement = document.createElement('table');
@@ -89,7 +89,7 @@ function totalHours() {
         tdTotals.textContent = totalsPerHours;
         tr3Element.appendChild(tdTotals);
     }
-
+    allTotalsPerHours = 0;
     for (let j = 0; j < locationArray.length; j++) {
         allTotalsPerHours += locationArray[j].cookiesTotal;
     }
@@ -133,6 +133,6 @@ function submitHandler(event) {
 
     tableElement.deleteRow(locationArray.length);
     totalHours();
-    
+
     loctionForm.reset();
 };
