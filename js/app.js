@@ -56,18 +56,28 @@ Location.prototype.render = function () {
     td1Element.textContent = this.cookiesTotal;
     tr2Element.appendChild(td1Element);
 
+    let td2Element = document.createElement('td');
+    tr2Element.appendChild(td2Element);
+
+    let editButton = document.createElement('button');
+    editButton.setAttribute("onclick","editData()");
+    editButton.textContent = "Update Data"
+    td2Element.appendChild(editButton);
+
 };
+
 
 function salesHours() {
 
     hours.unshift(" ");
-    hours.push("Daily Location Total")
+    hours.push("Daily Location Total", "Action")
     for (let i = 0; i < hours.length; i++) {
         let thHours = document.createElement('th');
         thHours.textContent = hours[i];
         tr1Element.appendChild(thHours);
     }
     hours.shift();
+    hours.pop();
     hours.pop();
 };
 
@@ -136,3 +146,7 @@ function submitHandler(event) {
 
     loctionForm.reset();
 };
+
+function editData(){
+    //let model =document.getElementById(editLocation);
+}
