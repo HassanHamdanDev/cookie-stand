@@ -1,10 +1,10 @@
 body {
-  font: normal small-caps normal 14px small-caption;
-  margin: 5px;
+  font-family: 'Lobster', cursive;  margin: 5px;
 }
 
 main {
   padding: 5px;
+  font-family: 'Palette Mosaic', cursive;
 }
 
 h3 {
